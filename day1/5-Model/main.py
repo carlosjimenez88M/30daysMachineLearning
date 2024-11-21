@@ -21,7 +21,9 @@ def prepare_data(train_artifact, test_artifact):
     X = train_data.drop(columns=["median_house_value"])
     y = train_data["median_house_value"]
 
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X, y,
+                                                      test_size=0.3,
+                                                      random_state=42)
 
     X_test = test_data.drop(columns=["median_house_value"])
     y_test = test_data["median_house_value"]
