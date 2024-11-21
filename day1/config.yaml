@@ -18,7 +18,7 @@ segregation:
   input_artifact: "processed_housing_data:latest"
   artifact_root: "data"
   test_size: .30
-  artifact_type: str
+  artifact_type: dataset
   random_state: 42
   stratify: 'income_cat'
 

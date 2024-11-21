@@ -59,7 +59,7 @@ def go(args):
             temp_path= os.path.join(tmpdirname, artifact_name)
 
             logger.info(f"Uploading the {split} dataset to {artifact_name}")
-            df.to_csv(temp_path)
+            df.to_csv(temp_path, index=False)
 
             artifact = wandb.Artifact(
                 name=artifact_name,
@@ -69,6 +69,7 @@ def go(args):
             artifact.add_file(temp_path)
             logger.info("Logging artifact")
             run.log_artifact(artifact)
+            logger.info(f"Artifact {artifact_name} logged successfully.")
             artifact.wait()
 
 if __name__ == "__main__":
@@ -93,7 +94,10 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--artifact_type", type=str, help="Type for the produced artifacts", required=True
+        "--artifact_type",
+        type=str,
+        help="Type for the produced artifacts",
+        required=True
     )
 
     parser.add_argument(
