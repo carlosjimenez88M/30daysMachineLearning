@@ -24,8 +24,8 @@ segregation:
 
 train:
   sweep_config: "sweep.yaml"
-  train_artifact: "data_train.csv"
-  test_artifact: "data_test.csv"
+  train_artifact: "data_train.csv:latest"
+  test_artifact: "data_test.csv:latest"
   output_artifact: "random_forest_model.pkl"
   best_params_output: "best_params.json"
 
