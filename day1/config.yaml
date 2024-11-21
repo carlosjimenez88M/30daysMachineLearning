@@ -18,7 +18,7 @@ segregation:
   input_artifact: "processed_housing_data:latest"
   artifact_root: "data"
   test_size: .30
-  artifact_type: dataset
+  artifact_type: 'dataset'
   random_state: 42
   stratify: 'income_cat'
 
@@ -28,5 +28,4 @@ train:
   test_artifact: "data_test.csv:latest"
   output_artifact: "random_forest_model.pkl"
   best_params_output: "best_params.json"
-
 

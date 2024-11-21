@@ -28,7 +28,6 @@ logging.basicConfig(level=logging.INFO,
 logger = logging.getLogger()
 
 
-
 #==============================#
 # ---- Main Configuration ---- #
 #==============================#
@@ -41,29 +40,29 @@ def go(args):
     logger.info("Downloading and reading artifact")
     artifact = run.use_artifact(args.input_artifact)
     artifact_path = artifact.file()
-    df = pd.read_csv(artifact_path,
-                     low_memory=False)
+    df = pd.read_csv(artifact_path, low_memory=False)
 
-    logger.info("Splitting data into train.py, val and test")
+    logger.info("Splitting data into train, val, and test")
     splits = {}
 
-    splits["train.py"], splits["test"] = train_test_split(
+    # Fixing the keys for proper naming
+    splits["train"], splits["test"] = train_test_split(
         df,
         test_size=args.test_size,
         random_state=args.random_state,
         stratify=df[args.stratify] if args.stratify != 'null' else None,
     )
     with tempfile.TemporaryDirectory() as tmpdirname:
-        for split, df, in splits.items():
+        for split, split_df in splits.items():  # Use appropriate variable names
             artifact_name = f"{args.artifact_root}_{split}.csv"
-            temp_path= os.path.join(tmpdirname, artifact_name)
+            temp_path = os.path.join(tmpdirname, artifact_name)
 
             logger.info(f"Uploading the {split} dataset to {artifact_name}")
-            df.to_csv(temp_path, index=False)
+            split_df.to_csv(temp_path, index=False)
 
             artifact = wandb.Artifact(
                 name=artifact_name,
-                type= args.artifact_type,
+                type=args.artifact_type,
                 description=f"{split} split of dataset {args.input_artifact}",
             )
             artifact.add_file(temp_path)
@@ -74,7 +73,7 @@ def go(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Split a dataset into train.py and test",
+        description="Split a dataset into train and test",
         fromfile_prefix_chars="@",
     )
 
@@ -127,7 +126,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     go(args)
-
-
-
-
