@@ -2,6 +2,7 @@ name: random_forest_env
 channels:
   - conda-forge
 dependencies:
+  - python=3.10
   - matplotlib
   - seaborn=0.13.2
   - tqdm

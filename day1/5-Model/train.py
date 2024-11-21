@@ -18,11 +18,9 @@ def prepare_data(train_artifact, test_artifact):
     train_data = pd.read_csv(train_artifact_path)
     test_data = pd.read_csv(test_artifact_path)
 
-    # Separar características y etiquetas
     X = train_data.drop(columns=["median_house_value"])
     y = train_data["median_house_value"]
 
-    # Dividir en train y val (80% - 20%)
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
     X_test = test_data.drop(columns=["median_house_value"])
@@ -53,7 +51,7 @@ def sweep_train(config_defaults, args):
                 X_train,
                 y_train,
                 scoring="root_mean_squared_error",
-                cv=5
+                cv=3
             )
             mean_cv_rmse = -cv_scores.mean()
             wandb.log({"cv_rmse": mean_cv_rmse})
