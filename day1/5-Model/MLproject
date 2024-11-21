@@ -1,0 +1,29 @@
+name: random_forest_training
+
+conda_env: conda.yaml
+
+entry_points:
+  sweep_and_train:
+    parameters:
+      sweep_config:
+        type: str
+        description: "Path to the W&B sweep configuration file"
+      train_artifact:
+        type: str
+        description: "Artifact containing the training dataset"
+      test_artifact:
+        type: str
+        description: "Artifact containing the test dataset"
+      output_artifact:
+        type: str
+        description: "Path to save the trained model"
+      best_params_output:
+        type: str
+        description: "Path to save the best parameters as JSON"
+    command: >-
+      python train.py
+      --sweep_config {sweep_config}
+      --train_artifact {train_artifact}
+      --test_artifact {test_artifact}
+      --output_artifact {output_artifact}
+      --best_params_output {best_params_output}

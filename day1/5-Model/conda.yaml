@@ -1,0 +1,16 @@
+name: random_forest_env
+channels:
+  - conda-forge
+dependencies:
+  - matplotlib
+  - seaborn=0.13.2
+  - tqdm
+#  - pycoral
+#  - tflite-runtime
+  - pip
+  - pip:
+      - wandb==0.18.3
+      - numpy== 2.0.2
+      - pandas== 2.2.2
+      - scikit-learn==1.5.2
+

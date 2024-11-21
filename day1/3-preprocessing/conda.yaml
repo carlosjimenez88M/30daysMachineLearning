@@ -1,0 +1,14 @@
+name: preprocessing
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip=24.0
+  - matplotlib
+  - pandas= 2.2.2
+  - numpy=2.0.2
+  - pip:
+      - wandb==0.18.3
+      - requests==2.31.0
+      - scikit-learn==1.5.2
+      - mlflow

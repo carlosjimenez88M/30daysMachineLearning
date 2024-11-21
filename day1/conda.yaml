@@ -1,0 +1,11 @@
+name: pipeline
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip=24.0
+  - pip:
+      - wandb==0.18.3
+      - requests==2.31.0
+      - mlflow
+      - hydra-core

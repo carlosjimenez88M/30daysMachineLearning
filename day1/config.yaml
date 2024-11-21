@@ -1,0 +1,32 @@
+main:
+  project_name: End_to_end
+  experiment_name: dev
+data:
+  file_url: https://github.com/ageron/data/raw/main/housing.tgz
+  artifact_name: housing_dataset
+  artifact_type: str
+  artifact_description: 'Data to training model'
+eda:
+  file_artifact: 'housing_dataset:latest'
+preprocessing:
+  input_artifact: "housing_dataset:latest"
+  output_artifact: "processed_data.csv"
+  output_artifact_name: "processed_housing_data"
+  description: "Preprocessed housing data ready for model training"
+
+segregation:
+  input_artifact: "processed_housing_data:latest"
+  artifact_root: "data"
+  test_size: .30
+  artifact_type: str
+  random_state: 42
+  stratify: 'income_cat'
+
+train:
+  sweep_config: "sweep.yaml"
+  train_artifact: "data_train.csv:latest"
+  test_artifact: "data_test.csv:latest"
+  output_artifact: "random_forest_model.pkl"
+  best_params_output: "best_params.json"
+
+

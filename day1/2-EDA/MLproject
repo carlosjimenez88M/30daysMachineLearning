@@ -1,0 +1,12 @@
+name: eda
+conda_env: conda.yaml
+
+entry_points:
+    main:
+        parameters:
+            file_artifact:
+                description: path to call the database
+                type: str
+                required: True
+        command : >-
+            python main.py --file_artifact {file_artifact}

@@ -1,0 +1,12 @@
+name: EDA
+channels :
+  - conda-forge
+  - defaults
+dependencies:
+  - matplotlib
+  - pip=24.0
+  - pandas = 2.2.2
+  - numpy= 2.0.2
+  - pip:
+      - wandb==0.18.3
+      - scikit-learn==1.5.2
