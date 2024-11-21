@@ -77,7 +77,6 @@ def go(config: DictConfig):
             'stratify': config['segregation']['stratify']
         }
     )
-
     _ = mlflow.run(
         os.path.join(root_path, "5-Model"),
         "sweep_and_train",
