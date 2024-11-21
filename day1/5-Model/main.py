@@ -1,3 +1,4 @@
+import os
 import wandb
 import yaml
 import json
@@ -8,7 +9,6 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import cross_val_score, train_test_split
 import psutil
-
 
 def prepare_data(train_artifact, test_artifact):
 
@@ -27,7 +27,6 @@ def prepare_data(train_artifact, test_artifact):
     y_test = test_data["median_house_value"]
 
     return X_train, X_val, X_test, y_train, y_val, y_test
-
 
 def sweep_train(config_defaults, args):
     def train(config=None):
@@ -50,7 +49,7 @@ def sweep_train(config_defaults, args):
                 model,
                 X_train,
                 y_train,
-                scoring="root_mean_squared_error",
+                scoring="neg_root_mean_squared_error",
                 cv=3
             )
             mean_cv_rmse = -cv_scores.mean()
@@ -66,19 +65,32 @@ def sweep_train(config_defaults, args):
             test_rmse = mean_squared_error(y_test, test_predictions, squared=False)
             wandb.log({"test_rmse": test_rmse})
 
-            if run.step == 0 or mean_cv_rmse < wandb.run.summary.get("best_cv_rmse", float("inf")):
-                wandb.run.summary["best_cv_rmse"] = mean_cv_rmse
-                wandb.run.summary["best_params"] = {
+            # Guardar los mejores parámetros si este run tiene el mejor cv_rmse
+            best_params_file = args.best_params_output
+
+            # Leer el mejor cv_rmse actual del archivo, si existe
+            if os.path.exists(best_params_file):
+                with open(best_params_file, 'r') as f:
+                    data = json.load(f)
+                best_cv_rmse = data.get('best_cv_rmse', float('inf'))
+            else:
+                best_cv_rmse = float('inf')
+
+            if mean_cv_rmse < best_cv_rmse:
+                # Actualizar el archivo con los nuevos mejores parámetros
+                best_params = {
                     "n_estimators": config.n_estimators,
                     "max_features": config.max_features,
                     "min_samples_split": config.min_samples_split,
                     "min_samples_leaf": config.min_samples_leaf,
                     "bootstrap": config.bootstrap,
+                    "best_cv_rmse": mean_cv_rmse
                 }
+                with open(best_params_file, 'w') as f:
+                    json.dump(best_params, f, indent=4)
 
     sweep_id = wandb.sweep(config_defaults, project="end_to_end")
     wandb.agent(sweep_id, function=train)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Random Forest with W&B sweeps")
@@ -94,6 +106,4 @@ if __name__ == "__main__":
 
     sweep_train(sweep_config, args)
 
-    best_params = wandb.run.summary.get("best_params", {})
-    with open(args.best_params_output, "w") as f:
-        json.dump(best_params, f, indent=4)
+

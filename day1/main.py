@@ -1,6 +1,6 @@
 #!usr/bin/env Python
 '''
-System Model to train.py like a End to end Machine Learning Application
+System Model to main.py like a End to end Machine Learning Application
 Cap #2 Hands on Machine Learning Applications
 '''
 

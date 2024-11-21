@@ -36,7 +36,7 @@ logger = logging.getLogger()
 
 def go(args):
     """
-    Main function to preprocess data, split into train.py and test sets,
+    Main function to preprocess data, split into main.py and test sets,
     and log the processed data as a W&B artifact.
     Args:
         args: Command-line arguments.
@@ -57,7 +57,7 @@ def go(args):
                                   bins=[0., 1.5, 3.0, 4.5, 6., np.inf],
                                   labels=[1, 2, 3, 4, 5])
 
-        # Create stratified train.py-test splits
+        # Create stratified main.py-test splits
         logger.info('Creating stratified splits...')
         splitter = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
         for train_idx, test_idx in splitter.split(df, df["income_cat"]):

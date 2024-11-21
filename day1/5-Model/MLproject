@@ -21,7 +21,7 @@ entry_points:
         type: str
         description: "Path to save the best parameters as JSON"
     command: >-
-      python train.py
+      python main.py
       --sweep_config {sweep_config}
       --train_artifact {train_artifact}
       --test_artifact {test_artifact}
