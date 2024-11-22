@@ -10,7 +10,7 @@ dependencies:
 #  - tflite-runtime
   - pip
   - pip:
-      - wandb==0.18.3
+      - wandb
       - numpy== 2.0.2
       - pandas== 2.2.2
       - scikit-learn==1.5.2

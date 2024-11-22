@@ -5,7 +5,7 @@ channels:
 dependencies:
   - pip=24.0
   - pip:
-      - wandb==0.18.3
+      - wandb
       - requests==2.31.0
       - mlflow
       - hydra-core
