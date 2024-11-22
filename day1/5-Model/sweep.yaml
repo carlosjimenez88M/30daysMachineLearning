@@ -21,7 +21,7 @@ parameters:
     min: 1
     max: 40
   bootstrap:
-    values: true
+    values: [true]
   max_depth:
     distribution: int_uniform
     min: 5
