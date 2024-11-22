@@ -1,5 +1,5 @@
 program: main.py
-method: bayes
+method: hyperband
 metric:
   name: cv_rmse
   goal: minimize
@@ -21,4 +21,14 @@ parameters:
     min: 1
     max: 40
   bootstrap:
-    values: [true, false]
+    values: true
+  max_depth:
+    distribution: int_uniform
+    min: 5
+    max: 50
+  criterion:
+    values: [ "mse", "mae" ]
+  max_samples:
+    distribution: uniform
+    min: 0.5
+    max: 1.0
