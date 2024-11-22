@@ -1,5 +1,5 @@
 program: main.py
-method: hyperband
+method: bayes
 metric:
   name: cv_rmse
   goal: minimize
