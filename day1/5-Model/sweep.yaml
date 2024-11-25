@@ -7,7 +7,7 @@ parameters:
   n_estimators:
     distribution: int_uniform
     min: 1
-    max: 100
+    max: 20
   max_features:
     distribution: int_uniform
     min: 1
@@ -26,13 +26,4 @@ parameters:
     distribution: int_uniform
     min: 5
     max: 50
-  criterion:
-    values: [ "mse", "mae" ]
-  max_samples:
-    distribution: uniform
-    min: 0.5
-    max: 1.0
-  min_impurity_decrease:
-    distribution: uniform
-    min: 0.0
-    max: 0.1
+
